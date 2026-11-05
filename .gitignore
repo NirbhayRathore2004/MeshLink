@@ -1,0 +1,43 @@
+# Built application files & binaries
+*.apk
+*.aar
+*.ap_
+*.aab
+MeshLink-debug.apk
+
+# Files for the ART/Dalvik VM
+*.dex
+
+# Java class files
+*.class
+
+# Generated files & build caches
+bin/
+gen/
+out/
+build/
+app/build/
+.gradle/
+.kotlin/
+
+# Local configuration file (contains machine-specific Android SDK paths)
+local.properties
+
+# Log files
+*.log
+
+# Android Studio / IntelliJ IDEA
+.idea/
+*.iml
+captures/
+.navigation/
+
+# macOS metadata
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Keep gradle wrapper jar inside gradle/wrapper/ only
+gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.jar
