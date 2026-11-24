@@ -1,0 +1,38 @@
+# Mesh Messenger --- Simulation Results
+
+> **Project status:** In Progress\
+> **Document status:** Simulation plan and results template\
+> **Platform:** Android\
+> **Core stack:** Kotlin, Jetpack Compose, Room Database\
+> **Networking model:** Offline-first, peer-to-peer, store-and-forward,
+> multi-hop
+
+## 1. Overview
+
+Mesh Messenger is designed to support message exchange between nearby
+devices without requiring internet access or cellular connectivity.
+Messages are intended to move between peers and, when the destination is
+not directly reachable, be stored temporarily and forwarded by
+intermediate devices.
+
+This document defines the simulation scenarios and metrics used to
+evaluate that design. **No measured simulation output is claimed in this
+document.** The result fields below are intentionally marked as pending
+until tests are run and their outputs are recorded.
+
+## 2. Simulation Objectives
+
+The simulation and subsequent device tests should evaluate:
+
+1.  Whether two directly connected peers can exchange messages without
+    internet access.
+2.  Whether messages can be relayed through one or more intermediate
+    peers.
+3.  Whether an intermediate peer can retain a message while the
+    destination is unavailable.
+4.  Whether queued messages are forwarded when a suitable peer becomes
+    reachable.
+5.  How delivery time and success rate change as network size and
+    connectivity change.
+6.  Whether duplicate messages are detected and prevented from appearing
+    multiple times in the conversation.
