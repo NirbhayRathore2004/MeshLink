@@ -35,4 +35,214 @@ The simulation and subsequent device tests should evaluate:
 5.  How delivery time and success rate change as network size and
     connectivity change.
 6.  Whether duplicate messages are detected and prevented from appearing
-    multiple times in the conversation.
+    multiple times in the conversation
+## 3. Proposed Network Model
+
+Represent each device as a node in an undirected connectivity graph:
+
+-   **Node:** An Android device running Mesh Messenger.
+-   **Link:** A direct communication opportunity between two devices.
+-   **Source:** The device that creates a message.
+-   **Destination:** The intended recipient.
+-   **Relay:** An intermediate device that temporarily stores and
+    forwards a message.
+-   **Message ID:** A unique identifier used to recognize the same
+    message across relays.
+
+A link exists only when two peers are within the supported communication
+range and the chosen transport can establish a connection. The actual
+transport and discovery mechanism should be documented once implemented.
+
+### Example topology
+
+``` text
+Device A  <---->  Device B  <---->  Device C
+  Source              Relay             Destination
+```
+
+In this example, A cannot reach C directly. B acts as an intermediate
+relay.
+
+## 4. Test Scenarios
+
+  -----------------------------------------------------------------------
+  ID                Scenario          Expected behavior Actual result
+  ----------------- ----------------- ----------------- -----------------
+  SIM-01            Direct peer       A sends a message Pending
+                    delivery          directly to B     
+
+  SIM-02            Single-relay      A sends through B Pending
+                    delivery          to C              
+
+  SIM-03            Multi-relay       A sends through   Pending
+                    delivery          multiple          
+                                      intermediate      
+                                      peers             
+
+  SIM-04            Destination       Relay stores the  Pending
+                    unavailable       message until the 
+                                      destination       
+                                      returns           
+
+  SIM-05            Reconnection      Queued message is Pending
+                                      forwarded after   
+                                      connectivity      
+                                      returns           
+
+  SIM-06            Duplicate         Repeated copies   Pending
+                    reception         are identified by 
+                                      message ID        
+
+  SIM-07            Relay             Message remains   Pending
+                    disconnection     safely queued     
+                                      where applicable  
+
+  SIM-08            Larger network    Delivery behavior Pending
+                                      is evaluated as   
+                                      peer count        
+                                      increases         
+  -----------------------------------------------------------------------
+
+## 5. Metrics to Record
+
+Record the following metrics for each test run:
+
+  -----------------------------------------------------------------------
+  Metric                  Description             Unit
+  ----------------------- ----------------------- -----------------------
+  Delivery success rate   Successfully delivered  \%
+                          unique messages divided 
+                          by messages sent        
+
+  End-to-end latency      Time between message    ms or s
+                          creation and            
+                          destination receipt     
+
+  Hop count               Number of peer-to-peer  hops
+                          forwarding steps        
+
+  Duplicate count         Number of repeated      messages
+                          message receptions      
+                          detected                
+
+  Queue waiting time      Time a message remains  s
+                          stored before           
+                          forwarding              
+
+  Delivery failures       Messages not delivered  messages
+                          within the defined test 
+                          window                  
+
+  Network size            Number of participating nodes
+                          peers                   
+  -----------------------------------------------------------------------
+
+Use consistent test conditions and report the number of messages sent,
+test duration, device count, and connectivity pattern alongside each
+result.
+
+## 6. Results
+
+**Current status: Not yet measured.**
+
+No numerical performance values are included because a completed
+simulation log or device-test dataset has not yet been supplied.
+Populate this section only after running the tests.
+
+  ---------------------------------------------------------------------------
+  Test ID       Nodes   Messages   Delivered    Success       Avg.  Avg. hops
+                            sent                   rate    latency 
+  -------- ---------- ---------- ----------- ---------- ---------- ----------
+  SIM-01          TBD        TBD         TBD        TBD        TBD        TBD
+
+  SIM-02          TBD        TBD         TBD        TBD        TBD        TBD
+
+  SIM-03          TBD        TBD         TBD        TBD        TBD        TBD
+
+  SIM-04          TBD        TBD         TBD        TBD        TBD        TBD
+
+  SIM-05          TBD        TBD         TBD        TBD        TBD        TBD
+  ---------------------------------------------------------------------------
+
+### Result calculation
+
+Calculate delivery success rate as:
+
+``` text
+Delivery Success Rate (%) =
+    (Unique messages delivered / Unique messages sent) * 100
+```
+
+Calculate end-to-end latency for each successfully delivered message as:
+
+``` text
+Latency = Destination receipt timestamp - Source creation timestamp
+```
+
+Report the mean latency as the arithmetic average across successfully
+delivered messages. State how undelivered messages and timeouts are
+handled.
+
+## 7. Observations to Document
+
+After testing, summarize:
+
+-   Whether direct delivery works without internet access.
+-   Whether messages successfully traverse relay devices.
+-   Whether messages queued during disconnection are delivered after
+    reconnection.
+-   Whether message IDs prevent duplicate display or processing.
+-   How latency and delivery success change with additional hops.
+-   Any battery, connection stability, or storage limitations observed.
+
+Only include observations supported by test logs or repeatable device
+tests.
+
+## 8. Limitations
+
+-   Results depend on the actual peer-discovery and transport
+    implementation.
+-   A graph-based simulation does not automatically reproduce real
+    wireless interference, Android background restrictions, or
+    device-specific connection behavior.
+-   Performance measurements should identify whether they came from a
+    software simulation, emulator, or physical Android devices.
+-   Delivery guarantees under prolonged disconnection depend on queue
+    persistence, retry policy, message expiry, and available storage.
+
+## 9. Future Work
+
+-   Implement repeatable network-topology simulations.
+-   Add automated tests for direct, relay, and reconnection flows.
+-   Measure delivery success rate and end-to-end latency across
+    different network sizes.
+-   Evaluate message expiry, retry limits, and duplicate suppression.
+-   Validate behavior on multiple physical Android devices with internet
+    access disabled.
+-   Export test logs in CSV or JSON format for reproducible analysis.
+
+## 10. Reproducibility Record
+
+Complete this record for every published result set.
+
+  Field                          Value
+  ------------------------------ -------
+  Test date                      TBD
+  Application version / commit   TBD
+  Android version                TBD
+  Device / emulator details      TBD
+  Peer discovery mechanism       TBD
+  Communication transport        TBD
+  Number of nodes                TBD
+  Messages per scenario          TBD
+  Test duration                  TBD
+  Timeout and retry settings     TBD
+  Log or dataset location        TBD
+
+------------------------------------------------------------------------
+
+**Note:** This file is a transparent reporting template for the Mesh
+Messenger project, not evidence that the listed scenarios have already
+passed. Replace each `TBD` and `Pending` entry with results from actual
+runs before presenting the metrics as validated.
+
