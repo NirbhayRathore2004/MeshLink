@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="844" viewBox="0 0 390 844" role="img" aria-labelledby="title desc">
+<title id="title">Live Routing Event Stream</title><desc id="desc">Terminal-style mesh and transport event log including permission error</desc>
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0b0e13"/><stop offset="1" stop-color="#11161d"/></linearGradient>
+ <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="5" stdDeviation="8" flood-color="#000" flood-opacity=".24"/></filter>
+ <style>
+ .ui{font-family:Inter,Roboto,Arial,sans-serif} .mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+ .white{fill:#eef3f8} .muted{fill:#89929e} .cyan{fill:#09d5e8} .green{fill:#13d69a} .purple{fill:#9255ff} .orange{fill:#ffad32} .red{fill:#ff626d}
+ .card{fill:#171c23;stroke:#303740;stroke-width:1} .small{font-size:11px} .body{font-size:13px} .label{font-size:10px;letter-spacing:1.7px}
+ </style>
+</defs>
+<rect width="390" height="844" fill="url(#bg)"/>
+<g class="ui">
+ <text x="24" y="28" class="white" font-size="13" font-weight="700">9:41</text>
+ <text x="318" y="28" class="white small">4G+  ▮▮  82%</text>
+ 
+ <text x="24" y="88" class="cyan" font-size="28">‹</text><text x="58" y="87" class="white" font-size="21" font-weight="800">Routing Lab · Live</text>
+ <rect x="24" y="112" width="342" height="62" rx="15" class="card"/>
+ <text x="42" y="137" class="muted label mono">ACTIVE NODE</text><text x="42" y="158" class="white" font-size="17" font-weight="800">NODE A</text>
+ <rect x="255" y="130" width="94" height="27" rx="13" fill="#073d31"/><circle cx="270" cy="143" r="4" class="green"/><text x="280" y="147" class="green small">ENGINE ON</text>
+ <rect x="24" y="190" width="342" height="52" rx="14" fill="#8248f7"/><text x="51" y="222" fill="#fff" font-size="15" font-weight="700">▶  A→D Hop Test</text>
+ <rect x="24" y="254" width="342" height="52" rx="14" fill="#09d5e8"/><text x="57" y="286" fill="#071117" font-size="15" font-weight="800">◎  Broadcast Ping</text>
+ <text x="25" y="345" class="muted label mono">LIVE MESH EVENT &amp; ROUTING STREAM</text>
+ <rect x="24" y="360" width="342" height="430" rx="17" class="card"/>
+ <rect x="36" y="374" width="318" height="43" rx="9" fill="#11161d" stroke="#343b45"/><text x="51" y="401" class="muted body">Filter logs…</text><text x="320" y="402" class="muted" font-size="18">☰</text>
+ <rect x="36" y="428" width="318" height="346" rx="10" fill="#0d1117"/>
+ <g class="mono" font-size="10.5">
+  <text x="47" y="451" class="muted">12:39:56.246</text><text x="143" y="451" class="purple">[Routing]</text><text x="208" y="451" class="muted">Loop detected</text><text x="143" y="467" class="muted">Packet dropped</text>
+  <text x="47" y="494" class="muted">12:39:57.568</text><text x="143" y="494" class="cyan">[Mesh]</text><text x="185" y="494" class="white">Stopping engine…</text>
+  <text x="47" y="521" class="muted">12:39:57.571</text><text x="143" y="521" class="cyan">[Mesh]</text><text x="185" y="521" class="white">Identity changed</text><text x="143" y="537" class="white">to NODE-A</text>
+  <text x="47" y="564" class="muted">12:39:57.574</text><text x="143" y="564" class="green">[Transport]</text><text x="216" y="564" class="white">Endpoints reset</text>
+  <text x="47" y="591" class="muted">12:39:57.575</text><text x="143" y="591" class="cyan">[Mesh]</text><text x="185" y="591" class="white">Engine stopped</text>
+  <text x="47" y="618" class="muted">12:39:57.582</text><text x="143" y="618" class="cyan">[Mesh]</text><text x="185" y="618" class="white">Starting NODE A</text>
+  <text x="47" y="645" class="muted">12:39:57.582</text><text x="143" y="645" class="green">[Transport]</text><text x="216" y="645" class="white">Advertising…</text>
+  <text x="47" y="672" class="muted">12:39:59.068</text><text x="143" y="672" class="green">[Transport]</text><text x="216" y="672" class="white">Advertising OK</text>
+  <text x="47" y="699" class="muted">12:39:59.069</text><text x="143" y="699" class="green">[Transport]</text><text x="216" y="699" class="white">Discovery start</text>
+  <text x="47" y="726" class="muted">12:39:59.078</text><text x="143" y="726" class="red">[Transport]</text><text x="216" y="726" class="red">Permission error</text>
+  <text x="143" y="742" class="red">ACCESS_COARSE_LOCATION</text>
+  <text x="47" y="764" class="muted">12:39:59.078</text><text x="143" y="764" class="cyan">[Mesh]</text><text x="185" y="764" class="white">Engine active</text>
+ </g>
+
+ <rect x="145" y="826" width="100" height="4" rx="2" fill="#aeb5bf" opacity=".8"/>
+</g></svg>
