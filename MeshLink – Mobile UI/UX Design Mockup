@@ -1,48 +1,175 @@
-# MeshLink – Mobile UI Mockup
+# MeshLink — UI/UX Design Specification
 
-A dark-themed mobile dashboard UI mockup for **MeshLink**, an offline peer-to-peer mesh networking application.
+> Separate design documentation for the MeshLink project. This file is not a README and does not replace the project README.
 
-## Preview
+## 1. Product interface overview
 
-![MeshLink Mobile Dashboard](MeshLink_Figma_Import.svg)
+MeshLink is presented as an offline peer-to-peer mesh networking application. The supplied screens show a mobile dashboard and a College Demo & Routing Lab. The UI focuses on node identity, nearby peers, mesh routes, cluster nodes, messaging, device discovery, topology visualization, routing tests and live diagnostic logs.
 
-## UI Overview
+## 2. Screen inventory
 
-The dashboard mockup presents the following sections:
-
-- **Node Identity** – displays the current node name and ID.
-- **Network Status** – shows the online/offline state.
-- **Network Statistics** – direct peers, mesh routes, and cluster nodes.
-- **Messages & Broadcast** – entry point for direct and cluster messaging.
-- **Discovered Devices** – entry point for viewing nearby nodes and connection states.
-- **Network Topology Graph** – entry point for visualizing the mesh network.
-- **College Demo & Routing Lab** – entry point for a four-node demonstration (A, B, C, D).
-
-## Design Palette
-
-| Colour | Hex | UI purpose |
+| Screen | Purpose | Screenshot-supported elements |
 |---|---|---|
-| Dark background | `#0D1117` | Main screen background |
-| Cyan | `#12D5E8` | Branding and connectivity accents |
-| Green | `#00D889` | Device discovery and network activity |
-| Purple | `#8750F5` | Routing and topology accents |
-| Orange | `#FF9800` | Demo and lab section |
-| Card background | `#171C22` | Dashboard cards |
+| Main Dashboard | Show current node and network summary | MeshLink title, OFFLINE status, node identity, direct peers, mesh routes, cluster nodes, navigation cards |
+| College Demo & Routing Lab | Configure a four-device demonstration | A/B/C/D preset identity buttons, A→D Hop Test, Broadcast Ping, clear-log control, live event stream |
+| Live Event Stream | Diagnose mesh and transport activity | Timestamped log rows, category tags, filter field, log utility controls, error output |
 
-## File
+## 3. Main Dashboard — content specification
 
-- `MeshLink_Figma_Import.svg` – scalable vector mockup; can be previewed in a browser or imported into Figma for editing.
+### Header
+- Product name: `MeshLink`
+- Supporting line: `Offline Peer-to-Peer Mesh Network`
+- Connection indicator: `OFFLINE` in the supplied reference state
+- Node identity card with editable identity affordance
+- Display node label (example from reference: `NODE D`) and ID (`NODE-D`)
+- Copy identity control
 
-## Open in Figma
+### Network summary
+Three metric cards:
+- `Direct Peers` — number of directly connected peers
+- `Mesh Routes` — number of known routes
+- `Cluster Nodes` — number of nodes in the cluster
 
-1. Download `MeshLink_Figma_Import.svg` from this repository.
-2. Open Figma and create or open a design file.
-3. Drag the SVG onto the Figma canvas.
-4. Ungroup elements as needed to edit individual parts.
+The supplied screenshot shows `0` for all three metrics. Values should be dynamic in the implementation.
 
-## Scope
+### Navigation cards
+1. **Messages & Broadcast** — “Send direct multi-hop messages or cluster broadcasts”
+2. **Discovered Devices** — “View direct neighbors, link states, and manual connect”; includes discovered count
+3. **Network Topology Graph** — “Interactive 2D visual map of the multi-hop mesh cluster”; includes route count
+4. **College Demo & Routing Lab** — “4-node simulation, preset identities (A, B, C, D) & live logger”
 
-This repository file represents the **visual UI mockup only**. The controls and dashboard sections illustrate the proposed interface; the SVG itself does not implement mesh networking, device discovery, messaging, or live routing.
+## 4. College Demo & Routing Lab — content specification
 
-**Project:** MeshLink – Offline Peer-to-Peer Mesh Network  
-**Asset format:** SVG (Figma-compatible)
+### Preset identities
+Section label: `1-CLICK PRESET NODE IDENTITIES (4-PHONE LAB)`
+
+Controls:
+- `A`
+- `B`
+- `C`
+- `D`
+
+The selected preset is visually emphasized using the cyan primary color. The reference log shows a switch to `NODE-A`, alias `NODE A`.
+
+### Primary actions
+- `A→D Hop Test` — starts a test from node A to node D.
+- `Broadcast Ping` — triggers a broadcast ping.
+- Clear logs — red/destructive utility control shown beside the two actions.
+
+### Live event and routing stream
+Section label: `LIVE MESH EVENT & ROUTING STREAM` (the reference shows a count of 15).
+
+Visible controls:
+- `Filter logs…` text field
+- Log filtering/utility icons
+- Timestamped event list
+
+Log categories visible in the reference:
+- `[Routing]`
+- `[Mesh]`
+- `[Transport]`
+
+Example event sequence from the supplied screenshot:
+1. Routing reports a loop detected for a packet; packet is dropped.
+2. Mesh engine stopping.
+3. Node identity switches to `NODE-A`, alias `NODE A`.
+4. Nearby connection endpoints are stopped and reset.
+5. Mesh engine stopped.
+6. Mesh engine starts as `NODE A (NODE-A)`.
+7. Nearby advertising starts.
+8. Nearby advertising starts successfully.
+9. Nearby discovery starts with strategy `P2P_CLUSTER`.
+10. Nearby discovery fails with error `8034: MISSING_PERMISSION_ACCESS_COARSE_LOCATION`.
+11. Mesh engine reports started with `Active: true`.
+
+**Important implementation distinction:** the supplied log indicates that nearby advertising succeeded, nearby discovery failed due to a location permission error, and the MeshLink engine still reported active. Do not collapse these into one generic “connected” state.
+
+## 5. Visual design system
+
+### Color tokens
+
+| Token | Hex | Intended use |
+|---|---|---|
+| Background | `#0B0E13` | App background |
+| Surface | `#171C23` | Cards and panels |
+| Elevated surface | `#20262E` | Inputs, secondary controls |
+| Border | `#303740` | Card and input outlines |
+| Primary cyan | `#09D5E8` | Brand, selected node, primary emphasis |
+| Routing purple | `#9255FF` | Routing and topology |
+| Success green | `#13D69A` | Successful transport/discovery |
+| Warning orange | `#FFAD32` | Demo/lab accent |
+| Error red | `#FF626D` | Permission failures and destructive actions |
+| Primary text | `#EEF3F8` | Titles and main content |
+| Secondary text | `#89929E` | Descriptions, labels and timestamps |
+
+### Typography
+- Primary UI: Inter / Roboto / system sans-serif.
+- Event stream: monospace.
+- Screen title: bold, approximately 20–22 px.
+- Card title: semibold, approximately 14–16 px.
+- Supporting text: approximately 12–13 px.
+- Section labels: uppercase, letter-spaced, monospace treatment.
+
+### Components
+- Rounded cards with subtle 1 px borders.
+- Primary action buttons use cyan or purple according to action type.
+- Status indicators pair text with color; do not rely on color alone.
+- Log entries use timestamps, category labels and message text.
+- Destructive actions use red and should be visually separated from primary actions.
+- Touch targets should be comfortably usable on a phone; aim for at least 44 × 44 px.
+
+## 6. Interaction and state model
+
+| Component | State / interaction |
+|---|---|
+| Node identity | Current node ID and alias; edit/copy affordances |
+| Connection status | Offline / starting / active / partial / error |
+| Peer metrics | Direct peer, route and cluster counts |
+| Preset selector | A, B, C or D; selected option highlighted |
+| Hop test | Idle / running / succeeded / failed |
+| Broadcast ping | Idle / sending / sent / failed |
+| Event stream | Newest events, filter text, scroll position |
+| Clear logs | Confirmation recommended before clearing |
+
+These are UI state recommendations; exact backend event contracts are not provided by the screenshots.
+
+## 7. Error and partial-connectivity presentation
+
+The reference includes:
+`8034: MISSING_PERMISSION_ACCESS_COARSE_LOCATION`
+
+Recommended UX response:
+- Preserve the raw error code in diagnostic logs.
+- Show a concise human-readable explanation near the discovery state.
+- Explain that nearby discovery needs the relevant permission.
+- Provide a clear action to open app permission settings or retry after permission is granted.
+- Keep advertising and engine status separate from discovery status.
+- Avoid showing “fully connected” when discovery has failed.
+
+## 8. Accessibility and usability recommendations
+
+- Use text labels alongside status colors and icons.
+- Maintain readable contrast on dark surfaces.
+- Support scalable text and screen-reader labels for icon-only controls.
+- Give selected preset buttons a non-color selected indicator where practical.
+- Make log filtering usable with keyboard and screen reader.
+- Provide confirmation and undo/recovery guidance for destructive log clearing.
+- Ensure long log messages wrap without clipping important error codes.
+
+## 9. Proposed next-stage improvements (not confirmed in screenshots)
+
+These are design proposals, not claims about existing implementation:
+- Add explicit permission-recovery panel for discovery failures.
+- Add a compact test-result summary for hop test and broadcast ping.
+- Add log category filters for Mesh, Transport and Routing.
+- Add empty states for zero peers, zero routes and zero discovered devices.
+- Add a legend and accessible node labels to the topology graph.
+- Add a clear distinction between engine-active, advertising-active and discovery-active states.
+
+## 10. SVG mockup files
+
+- `01_meshlink_dashboard.svg` — dashboard stage.
+- `02_routing_lab_setup.svg` — preset selection and test setup stage.
+- `03_live_routing_event_stream.svg` — live diagnostic stream stage.
+
+Each SVG is editable vector artwork and can be imported into Figma. The mockups are design references, not production UI code.
